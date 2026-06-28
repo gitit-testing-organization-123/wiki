@@ -1,0 +1,78 @@
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout site content
+        uses: actions/checkout@v7
+        with:
+          path: site
+
+      - name: Checkout gititpy
+        uses: actions/checkout@v7
+        with:
+          repository: gitit-testing-organization-123/gititpy
+          path: gititpy
+
+      - name: Checkout Basilisk
+        uses: actions/checkout@v7
+        with:
+          repository: pacific-development-team/basilisk
+          path: site/basilisk
+
+      - name: Checkout sandbox
+        uses: actions/checkout@v7
+        with:
+          repository: gitit-testing-organization-123/sandbox
+          path: site/sandbox
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc build-essential
+
+      - name: Install gititpy
+        run: |
+          python -m pip install ./gititpy
+
+      - name: Build site
+        run: |
+          python -m gititpy \
+            --base-dir site \
+            build \
+            --output site/public \
+            --base-url /wiki \
+            --no-source-tags
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/public
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
