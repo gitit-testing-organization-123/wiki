@@ -56,7 +56,7 @@ jobs:
           python -m gititpy \
             --base-dir site \
             build \
-            --output site/public \
+            --output public \
             --base-url /wiki \
             --no-source-tags
 
