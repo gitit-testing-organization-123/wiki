@@ -64,9 +64,9 @@ jobs:
           python -m gititpy \
             --base-dir site \
             --wiki-root . \
-            --sandbox-root ../sandbox
+            --sandbox-root ../sandbox \
             build \
-            --source-root ../basilisk/src
+            --source-root ../basilisk/src \
             --output ../public \
             --base-url /wiki \
             --no-source-tags
