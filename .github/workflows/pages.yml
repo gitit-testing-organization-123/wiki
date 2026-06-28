@@ -34,13 +34,21 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: pacific-development-team/basilisk
-          path: site/basilisk
+          path: basilisk
 
       - name: Checkout sandbox
         uses: actions/checkout@v7
         with:
           repository: gitit-testing-organization-123/sandbox
-          path: site/sandbox
+          path: sandbox
+
+      - name: Restore generated site cache
+        uses: actions/cache@v4
+        with:
+          path: public
+          key: gititpy-public-${{ github.run_id }}
+          restore-keys: |
+            gititpy-public-
 
       - name: Install system dependencies
         run: |
@@ -55,10 +63,16 @@ jobs:
         run: |
           python -m gititpy \
             --base-dir site \
+            --wiki-root . \
+            --sandbox-root ../sandbox
             build \
-            --output public \
+            --source-root ../basilisk/src
+            --output ../public \
             --base-url /wiki \
             --no-source-tags
+   
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
