@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  repository_dispatch:
+    types: [basilisk-artifacts-ready]
 
 permissions:
   contents: read
@@ -20,24 +22,25 @@ jobs:
 
     steps:
       - name: Checkout site content
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
         with:
           path: site
 
       - name: Checkout gititpy
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
         with:
           repository: gitit-testing-organization-123/gititpy
           path: gititpy
 
       - name: Checkout Basilisk
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
         with:
-          repository: pacific-development-team/basilisk
+          repository: gitit-testing-organization-123/basilisk
+          ref: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.sha || 'main' }}
           path: basilisk
 
       - name: Checkout sandbox
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
         with:
           repository: gitit-testing-organization-123/sandbox
           path: sandbox
@@ -53,11 +56,78 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc build-essential
+          sudo apt-get install -y --no-install-recommends \
+            build-essential \
+            gnuplot-nox \
+            pandoc \
+            python3-matplotlib \
+            python3-numpy \
+            s3cmd
 
       - name: Install gititpy
         run: |
           python -m pip install ./gititpy
+
+      - name: Download Basilisk CTest artifact tree
+        if: github.event_name == 'repository_dispatch'
+        env:
+          GH_TOKEN: ${{ secrets.BASILISK_ACTIONS_READ_TOKEN }}
+          SOURCE_REPO: ${{ github.event.client_payload.source_repo }}
+          RUN_ID: ${{ github.event.client_payload.run_id }}
+          ARTIFACT_NAME: ${{ github.event.client_payload.artifact_name || 'basilisk-build-artifacts' }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${GH_TOKEN}" ]]; then
+            echo "::error::BASILISK_ACTIONS_READ_TOKEN is required to download Basilisk CTest artifacts."
+            exit 1
+          fi
+          rm -rf basilisk/build/release/src
+          mkdir -p basilisk/build/release/src
+          gh run download "${RUN_ID}" \
+            --repo "${SOURCE_REPO}" \
+            --name "${ARTIFACT_NAME}" \
+            --dir basilisk/build/release/src
+
+      - name: Generate plot artifacts
+        if: github.event_name == 'repository_dispatch'
+        run: |
+          python -m gititpy.artifacts_cli \
+            --base-dir site \
+            --source-root ../basilisk/src \
+            --artifact-root ../basilisk/build/release/src \
+            --sandbox-root ../sandbox \
+            plots generate
+
+      - name: Stage artifact tree
+        if: github.event_name == 'repository_dispatch'
+        run: |
+          rm -rf artifact-stage
+          python -m gititpy.artifacts_cli \
+            --base-dir site \
+            --source-root ../basilisk/src \
+            --artifact-root ../basilisk/build/release/src \
+            --sandbox-root ../sandbox \
+            stage --dest artifact-stage
+
+      - name: Upload artifacts to DigitalOcean Spaces
+        if: github.event_name == 'repository_dispatch'
+        env:
+          DO_SPACES_KEY: ${{ secrets.DO_SPACES_KEY }}
+          DO_SPACES_SECRET: ${{ secrets.DO_SPACES_SECRET }}
+          DO_SPACES_BUCKET: basilisk
+          DO_SPACES_REGION: ric1
+        run: |
+          set -euo pipefail
+          if [[ -z "${DO_SPACES_KEY}" || -z "${DO_SPACES_SECRET}" ]]; then
+            echo "::error::DO_SPACES_KEY and DO_SPACES_SECRET are required to upload artifacts."
+            exit 1
+          fi
+          s3cmd sync artifact-stage/ "s3://${DO_SPACES_BUCKET}/" \
+            --host="${DO_SPACES_REGION}.digitaloceanspaces.com" \
+            --host-bucket="%(bucket)s.${DO_SPACES_REGION}.digitaloceanspaces.com" \
+            --access_key="${DO_SPACES_KEY}" \
+            --secret_key="${DO_SPACES_SECRET}" \
+            --acl-public
 
       - name: Build site
         run: |
