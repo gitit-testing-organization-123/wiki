@@ -61,15 +61,7 @@ jobs:
 
       - name: Build site
         run: |
-          python -m gititpy \
-            --base-dir site \
-            --wiki-root . \
-            --sandbox-root ../sandbox \
-            build \
-            --source-root ../basilisk/src \
-            --output ../public \
-            --base-url /wiki \
-            --no-source-tags
+          python -m gititpy --base-dir site build
    
       - name: Configure Pages
         uses: actions/configure-pages@v5
