@@ -23,4 +23,4 @@ source = true
 source_tags = true
 qcc_command = "qcc"
 jobs = 4
-verbose = false
+verbose = true
