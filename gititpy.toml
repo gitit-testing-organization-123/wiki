@@ -14,7 +14,8 @@ static_roots = ["static"]
 
 [artifacts]
 base_url = "https://basilisk.ric1.cdn.digitaloceanspaces.com"
-local_root = "../basilisk/build/release/src"
+source_local_root = "../basilisk/build/release/src"
+sandbox_local_root = "../sandbox/build"
 
 [build]
 source = true
