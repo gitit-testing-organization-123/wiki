@@ -118,7 +118,7 @@ jobs:
               token="${ORG_ACTIONS_READ_TOKEN}"
               source_repo="${SOURCE_REPO:-gitit-testing-organization-123/sandbox}"
               artifact_name="${ARTIFACT_NAME:-sandbox-build-artifacts}"
-              download_dir=sandbox/build
+              download_dir=sandbox-artifacts
               ;;
           esac
           if [[ -z "${token}" ]]; then
