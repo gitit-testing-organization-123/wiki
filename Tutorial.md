@@ -833,7 +833,7 @@ animate grid.ppm
 
 which gives an animation looking like
 
-![Adaptive grid](tuto/grid.png)
+![Adaptive grid](/src/figure/grid.png)
 
 # Using Makefiles
 
@@ -922,7 +922,7 @@ recompiling and/or rerunning the simulation.
 
 The default Makefile in Basilisk does much more than this. Read
 [*"Running and creating test cases (and
-examples)"*](/wiki/src/test/README#running-and-creating-test-cases-and-examples)
+examples)"*](/src/test/README#running-and-creating-test-cases-and-examples)
 if you want to know more.
 
 # Using macros
@@ -1018,8 +1018,8 @@ have been covered in this tutorial.
 For more examples of applications, post-processing, graphs etc..., you
 can also look at the
 
-* [Examples](src/examples/README)
-* [Test cases](src/test/README)
+* [Examples](/src/examples/README)
+* [Test cases](/src/test/README)
 
 Note also that in these examples, as in the pieces of code above,
 various keywords will be linked either to the documentation for
@@ -1027,10 +1027,10 @@ standard C functions or to the documentation of Basilisk keywords and
 functions. You can learn a lot by following these links.
 
 If you want to know what Basilisk can be used for, have a look at the
-various [solvers](src/README#solvers) available. Again, if you just
+various [solvers](/src/README#solvers) available. Again, if you just
 want to use these pre-defined solvers, reading only the first few
 sections should be sufficient (as we did for
-[saint-venant.h](src/saint-venant.h)), but feel free to dig deeper if
+[saint-venant.h](/src/saint-venant.h)), but feel free to dig deeper if
 you are interested. Note also that the "Usage" section at the end of
 each page contains links to various applications of the solvers.
 

@@ -5,7 +5,7 @@ discretisation schemes on Cartesian grids.
 
 [Part I](Basilisk C#part-i-basic-concepts) covers the basic concepts
 which are necessary to setup simple simulations using [pre-defined
-solvers](src/README#solvers).
+solvers](/src/README#solvers).
 
 [Part II](Basilisk C#part-ii-more-advanced-concepts) gives further
 details and is necessary if you want to setup more complex simulations
@@ -31,7 +31,7 @@ origin (-1.2, -3.);
 Changing from 2D (the default) to 1D or 3D can be done by [changing
 grids](#one-two-or-three-dimensions). Non-squares (or non-cubic
 in 3D) domains can be defined using the
-[dimensions()](/wiki/src/Tips#non-cubic-domains) function.
+[dimensions()](/src/Tips#non-cubic-domains) function.
 
 The default number of grid points in each dimension is 64 in one or
 two dimensions and 16 in 3D. It can be changed either using
@@ -88,7 +88,7 @@ Stencils are used to access field values and their local neighbours. By
 default Basilisk guarantees consistent field values in a 3x3
 neighbourhood (in 2D). This can be represented like this
 
-![3x3 stencil](/wiki/src/figures/stencil.svg)
+![3x3 stencil](/src/figures/stencil.svg)
 
 Neighbouring values are accessed using the indexing scheme pictured on
 the figure. For example, computing an approximation of the Laplacian
@@ -194,7 +194,7 @@ a[left] = neumann(an);
 
 Note also that using these pre-defined expressions is necessary to
 obtain automatic [*homogeneous boundary 
-conditions*](src/poisson.h#homogeneous-boundary-conditions), which
+conditions*](/src/poisson.h/#homogeneous-boundary-conditions), which
 is important if scalar `a` is the solution of a Poisson problem (see also [the section below](#homogeneous-boundary-conditions)).
 
 For vector fields, boundary conditions are defined in a coordinate
@@ -432,7 +432,7 @@ sometimes called *variable staggering*). Basilisk provides support for
 the three most common types of staggering: centered (the default),
 face and vertex staggering.
 
-![Example of centered, face and vertex staggering](src/figures/staggering.svg)
+![Example of centered, face and vertex staggering](/src/figures/staggering.svg)
 
 How to implement such *staggering* is largely a matter of
 convention. For example, one could just allocate standard fields in
@@ -460,13 +460,13 @@ conditions. All the vertex values need to be defined using
 
 For *face* fields stencil values in the picture below are consistent.
 
-![Stencils for *face* and *vertex* fields](src/figures/stencil_face.svg)
+![Stencils for *face* and *vertex* fields](/src/figures/stencil_face.svg)
 
 ## Homogeneous boundary conditions
 
-When solving linear systems iteratively (e.g. using the [multigrid solver](/wiki/src/poisson.h/#multigrid-solver)), the homogeneous versions of boundary conditions applied to the unknown field are required.
+When solving linear systems iteratively (e.g. using the [multigrid solver](/src/poisson.h/#multigrid-solver)), the homogeneous versions of boundary conditions applied to the unknown field are required.
 
-They can be specified through functions using the `..._homogeneous` postfix. See the definitions of the [dirichlet() and neumann() functions](/wiki/src/grid/cartesian-common.h/#dirichlet) and their homogeneous versions for an example.
+They can be specified through functions using the `..._homogeneous` postfix. See the definitions of the [dirichlet() and neumann() functions](/src/grid/cartesian-common.h/#dirichlet) and their homogeneous versions for an example.
 
 ## (Maybe) Constant fields
 
@@ -717,7 +717,7 @@ foreach_face()
 
 Note that a face is defined by convention as separating a cell from
 its *left* neighbour (hence `a[-1,0]` and not `a[1,0]`, see the [Face
-and vertex fields section](Basilisk C#face-and-vertex-fields)
+and vertex fields section](#face-and-vertex-fields)
 above). Note also that the duplication/permutation performed by
 `foreach_dimension()` is implicitly included in `foreach_face()`.
 
@@ -740,7 +740,7 @@ face.
 
 ### `foreach_vertex()`
 
-When initialising [vertex fields](Basilisk C#face-and-vertex-fields),
+When initialising [vertex fields](#face-and-vertex-fields),
 it is necessary to traverse each vertex of the grid. For example,
 computing vorticity using the components of velocity defined on faces
 could be written
@@ -873,11 +873,11 @@ events (i = 4, t = 0.00191154)
 
 There are two event groups in this example: *stability* and
 *vof*. They correspond to extensions of the initial solver
-[/wiki/src/navier-stokes/centered.h](): adding the stability conditions for
-surface tension (at line 59 of [/wiki/src/tension.h]()) and for VOF (at
-line 44 of [/wiki/src/vof.h]()) and plugging in VOF advection (at line 174
-of [/wiki/src/vof.h]()) at the correct location (line 175 of
-[/wiki/src/navier-stokes/centered.h]()).
+[/src/navier-stokes/centered.h/](): adding the stability conditions for
+surface tension (at line 59 of [/src/tension.h/]()) and for VOF (at
+line 44 of [/src/vof.h/]()) and plugging in VOF advection (at line 174
+of [/src/vof.h/]()) at the correct location (line 175 of
+[/src/navier-stokes/centered.h/]()).
 
 ## Grid allocation and deallocation
 
@@ -941,14 +941,14 @@ does not use the multilevel capability).
 
 Note also that one can use different implementations of the same grid
 type, adapted to a different hardware. For example a [GPU-accelerated
-multigrid](/wiki/src/grid/gpu/grid.h) using
+multigrid](/src/grid/gpu/grid.h) using
 
 ~~~literatec
 #include "grid/gpu/multigrid.h"
 ~~~
 
 Another useful way to change the grid, without changing the source
-code, is using the `-grid` command line argument of [qcc](/wiki/src/qcc.c),
+code, is using the `-grid` command line argument of [qcc](/src/qcc.c),
 like this for example
 
 ~~~bash
@@ -979,7 +979,7 @@ codes which can run with an arbitrary number of dimensions:
 
 Besides the general properties above, the multigrid implementations
 add some functionalities not present in other grids, including
-[non-square or non-cubic domains](/wiki/src/Tips#non-cubic-domains).
+[non-square or non-cubic domains](/src/Tips#non-cubic-domains).
 
 ### Adaptive grids
 
@@ -995,7 +995,7 @@ Basilisk macros are defined using the `macro` keyword. They provide a
 cleaner and more robust interface than standard C preprocessor macros
 and can in particular be used to define new
 [iterators](#iterators). See the documentation in
-[macro.h](/wiki/src/ast/macro.h).
+[macro.h](/src/ast/macro.h/).
 
 ## Diagonalization
 
@@ -1011,7 +1011,7 @@ The `einstein_sum()` operator can be used to perform automatic [Einstein summati
 
 ## Dimensional Analysis
 
-The Basilisk C preprocessor [qcc](/wiki/src/qcc.c) performs sophisticated [Dimensional Analysis](https://en.wikipedia.org/wiki/Dimensional_analysis). Within this framework, the dimensions of numerical constants are given using "standard" C array indexing. For example the following syntax:
+The Basilisk C preprocessor [qcc](/src/qcc.c) performs sophisticated [Dimensional Analysis](https://en.wikipedia.org/wiki/Dimensional_analysis). Within this framework, the dimensions of numerical constants are given using "standard" C array indexing. For example the following syntax:
 
 ~~~literatec
 double g = 9.81 [1,-2];
@@ -1045,7 +1045,7 @@ Basilisk can automatically parallelise field iterations
 (i.e. `foreach()` etc...) on systems supporting
 [OpenMP](https://en.wikipedia.org/wiki/OpenMP),
 [MPI](https://en.wikipedia.org/wiki/Message_Passing_Interface) or [on
-Graphics Processing Units (GPUs)](/wiki/src/grid/gpu/grid.h). If the
+Graphics Processing Units (GPUs)](/src/grid/gpu/grid.h). If the
 *write* operations performed on stencils are purely local
 (i.e. concurrent accesses by several threads are only possible for
 *read* operations), then nothing special needs to be done to
@@ -1144,8 +1144,8 @@ for individual loops can be forced like this:
 
 The `trace` keyword is used to indicate that the function immediately
 following should be instrumented for [built-in
-profiling](src/README.trace) or [profiling with
-Paraver](src/README.paraver).  For example one could write
+profiling](/src/README.trace) or [profiling with
+Paraver](/src/README.paraver).  For example one could write
 
 ~~~literatec
 trace
