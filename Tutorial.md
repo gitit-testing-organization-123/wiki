@@ -26,7 +26,7 @@ sudo apt install emacs
     + [*The C programming language*](http://en.wikipedia.org/wiki/The_C_Programming_Language)
 
 * You then need to follow the [installation
-  instructions](src/INSTALL) to setup basilisk on your system.
+  instructions](/src/INSTALL/) to setup basilisk on your system.
   
 * If you are using a Mac please see special installation instructions 
   for [make and gdb](/sandbox/INSTALL_MACOS). 
@@ -56,7 +56,7 @@ which returns on my system
     warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 If instead you get an error message, you need to go back to the
-[installation instructions](src/INSTALL) and check that you did
+[installation instructions](/src/INSTALL/) and check that you did
 everything correctly.
 
 # The simulation
@@ -75,12 +75,12 @@ following line ...
 
 ... and save the file using the "File -> Save" menu (or the Control-X
 Control-S keyboard shortcut). This C preprocessor command, includes
-the [saint-venant.h](src/saint-venant.h) file into our program. This
+the [saint-venant.h](/src/saint-venant.h/) file into our program. This
 file defines all the variables and functions which are required to run
 the Saint-Venant solver of Basilisk. If you follow the link above, you
 will see that the corresponding code is documented. Now is a good time
-to read the [first two sections](src/saint-venant.h) (up to [*Time
-integration*](src/saint-venant.h#time-integration)) to remind yourself
+to read the [first two sections](/src/saint-venant.h/) (up to [*Time
+integration*](/src/saint-venant.h/#time-integration)) to remind yourself
 of what the equations, variables and parameters are...
 
 ## Minimal program
@@ -119,7 +119,7 @@ to *bump.c* (using the text editor). If you have some notions of C
 the definition of a C function called *main* which takes no parameters
 and just calls the function *run*. The *run()* function is defined by
 the Saint-Venant solver (i.e. is included in
-[saint-venant.h](src/saint-venant.h)).
+[saint-venant.h](/src/saint-venant.h/)).
 
 We can now save the file and recompile using (in the shell)
 
@@ -283,7 +283,7 @@ The *init* event will happen only at the beginning of the simulation
 ($t=0$). Within the body of the event, we use the Basilisk-specific
 [foreach](Basilisk C#iterators) iterator to set the values of field
 *h* (the depth of the liquid layer as defined and documented in the
-[Saint-Venant solver](src/saint-venant.h)). We use a Gaussian bump of
+[Saint-Venant solver](/src/saint-venant.h/)). We use a Gaussian bump of
 characteristic radius $1./\sqrt{200}$ and amplitude one on top of a
 layer of constant depth 0.1. The *x* and *y* coordinates are *double*
 values defined implicitly by the *foreach* operator.
@@ -922,7 +922,7 @@ recompiling and/or rerunning the simulation.
 
 The default Makefile in Basilisk does much more than this. Read
 [*"Running and creating test cases (and
-examples)"*](/src/test/README#running-and-creating-test-cases-and-examples)
+examples)"*](/src/test/README/#running-and-creating-test-cases-and-examples)
 if you want to know more.
 
 # Using macros
@@ -1018,8 +1018,8 @@ have been covered in this tutorial.
 For more examples of applications, post-processing, graphs etc..., you
 can also look at the
 
-* [Examples](/src/examples/README)
-* [Test cases](/src/test/README)
+* [Examples](/src/examples/README/)
+* [Test cases](/src/test/README/)
 
 Note also that in these examples, as in the pieces of code above,
 various keywords will be linked either to the documentation for
@@ -1027,10 +1027,10 @@ standard C functions or to the documentation of Basilisk keywords and
 functions. You can learn a lot by following these links.
 
 If you want to know what Basilisk can be used for, have a look at the
-various [solvers](/src/README#solvers) available. Again, if you just
+various [solvers](/src/README/#solvers) available. Again, if you just
 want to use these pre-defined solvers, reading only the first few
 sections should be sufficient (as we did for
-[saint-venant.h](/src/saint-venant.h)), but feel free to dig deeper if
+[saint-venant.h](/src/saint-venant.h/)), but feel free to dig deeper if
 you are interested. Note also that the "Usage" section at the end of
 each page contains links to various applications of the solvers.
 
