@@ -31,7 +31,7 @@ origin (-1.2, -3.);
 Changing from 2D (the default) to 1D or 3D can be done by [changing
 grids](#one-two-or-three-dimensions). Non-squares (or non-cubic
 in 3D) domains can be defined using the
-[dimensions()](/src/Tips#non-cubic-domains) function.
+[dimensions()](/wiki/src/Tips#non-cubic-domains) function.
 
 The default number of grid points in each dimension is 64 in one or
 two dimensions and 16 in 3D. It can be changed either using
@@ -88,7 +88,7 @@ Stencils are used to access field values and their local neighbours. By
 default Basilisk guarantees consistent field values in a 3x3
 neighbourhood (in 2D). This can be represented like this
 
-![3x3 stencil](/src/figures/stencil.svg)
+![3x3 stencil](/wiki/src/figures/stencil.svg)
 
 Neighbouring values are accessed using the indexing scheme pictured on
 the figure. For example, computing an approximation of the Laplacian
@@ -464,9 +464,9 @@ For *face* fields stencil values in the picture below are consistent.
 
 ## Homogeneous boundary conditions
 
-When solving linear systems iteratively (e.g. using the [multigrid solver](/src/poisson.h#multigrid-solver)), the homogeneous versions of boundary conditions applied to the unknown field are required.
+When solving linear systems iteratively (e.g. using the [multigrid solver](/wiki/src/poisson.h/#multigrid-solver)), the homogeneous versions of boundary conditions applied to the unknown field are required.
 
-They can be specified through functions using the `..._homogeneous` postfix. See the definitions of the [dirichlet() and neumann() functions](/src/grid/cartesian-common.h#dirichlet) and their homogeneous versions for an example.
+They can be specified through functions using the `..._homogeneous` postfix. See the definitions of the [dirichlet() and neumann() functions](/wiki/src/grid/cartesian-common.h/#dirichlet) and their homogeneous versions for an example.
 
 ## (Maybe) Constant fields
 
@@ -873,11 +873,11 @@ events (i = 4, t = 0.00191154)
 
 There are two event groups in this example: *stability* and
 *vof*. They correspond to extensions of the initial solver
-[/src/navier-stokes/centered.h](): adding the stability conditions for
-surface tension (at line 59 of [/src/tension.h]()) and for VOF (at
-line 44 of [/src/vof.h]()) and plugging in VOF advection (at line 174
-of [/src/vof.h]()) at the correct location (line 175 of
-[/src/navier-stokes/centered.h]()).
+[/wiki/src/navier-stokes/centered.h](): adding the stability conditions for
+surface tension (at line 59 of [/wiki/src/tension.h]()) and for VOF (at
+line 44 of [/wiki/src/vof.h]()) and plugging in VOF advection (at line 174
+of [/wiki/src/vof.h]()) at the correct location (line 175 of
+[/wiki/src/navier-stokes/centered.h]()).
 
 ## Grid allocation and deallocation
 
@@ -941,14 +941,14 @@ does not use the multilevel capability).
 
 Note also that one can use different implementations of the same grid
 type, adapted to a different hardware. For example a [GPU-accelerated
-multigrid](/src/grid/gpu/grid.h) using
+multigrid](/wiki/src/grid/gpu/grid.h) using
 
 ~~~literatec
 #include "grid/gpu/multigrid.h"
 ~~~
 
 Another useful way to change the grid, without changing the source
-code, is using the `-grid` command line argument of [qcc](/src/qcc.c),
+code, is using the `-grid` command line argument of [qcc](/wiki/src/qcc.c),
 like this for example
 
 ~~~bash
@@ -979,7 +979,7 @@ codes which can run with an arbitrary number of dimensions:
 
 Besides the general properties above, the multigrid implementations
 add some functionalities not present in other grids, including
-[non-square or non-cubic domains](/src/Tips#non-cubic-domains).
+[non-square or non-cubic domains](/wiki/src/Tips#non-cubic-domains).
 
 ### Adaptive grids
 
@@ -995,7 +995,7 @@ Basilisk macros are defined using the `macro` keyword. They provide a
 cleaner and more robust interface than standard C preprocessor macros
 and can in particular be used to define new
 [iterators](#iterators). See the documentation in
-[macro.h](/src/ast/macro.h).
+[macro.h](/wiki/src/ast/macro.h).
 
 ## Diagonalization
 
@@ -1007,11 +1007,11 @@ for multigrid solutions of linear systems.
 
 ## Einstein summation
 
-The `einstein_sum()` operator can be used to perform automatic [Einstein summation](https://en.wikipedia.org/wiki/Einstein_notation) on the components of tensors and vectors. See the documentation in [einstein_sum.h](/src/ast/einstein_sum.h).
+The `einstein_sum()` operator can be used to perform automatic [Einstein summation](https://en.wikipedia.org/wiki/Einstein_notation) on the components of tensors and vectors. See the documentation in [einstein_sum.h](/wiki/src/ast/einstein_sum.h).
 
 ## Dimensional Analysis
 
-The Basilisk C preprocessor [qcc](/src/qcc.c) performs sophisticated [Dimensional Analysis](https://en.wikipedia.org/wiki/Dimensional_analysis). Within this framework, the dimensions of numerical constants are given using "standard" C array indexing. For example the following syntax:
+The Basilisk C preprocessor [qcc](/wiki/src/qcc.c) performs sophisticated [Dimensional Analysis](https://en.wikipedia.org/wiki/Dimensional_analysis). Within this framework, the dimensions of numerical constants are given using "standard" C array indexing. For example the following syntax:
 
 ~~~literatec
 double g = 9.81 [1,-2];
@@ -1045,7 +1045,7 @@ Basilisk can automatically parallelise field iterations
 (i.e. `foreach()` etc...) on systems supporting
 [OpenMP](https://en.wikipedia.org/wiki/OpenMP),
 [MPI](https://en.wikipedia.org/wiki/Message_Passing_Interface) or [on
-Graphics Processing Units (GPUs)](/src/grid/gpu/grid.h). If the
+Graphics Processing Units (GPUs)](/wiki/src/grid/gpu/grid.h). If the
 *write* operations performed on stencils are purely local
 (i.e. concurrent accesses by several threads are only possible for
 *read* operations), then nothing special needs to be done to

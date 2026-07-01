@@ -922,7 +922,7 @@ recompiling and/or rerunning the simulation.
 
 The default Makefile in Basilisk does much more than this. Read
 [*"Running and creating test cases (and
-examples)"*](/src/test/README#running-and-creating-test-cases-and-examples)
+examples)"*](/wiki/src/test/README#running-and-creating-test-cases-and-examples)
 if you want to know more.
 
 # Using macros
