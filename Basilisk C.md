@@ -88,7 +88,7 @@ Stencils are used to access field values and their local neighbours. By
 default Basilisk guarantees consistent field values in a 3x3
 neighbourhood (in 2D). This can be represented like this
 
-![3x3 stencil](/src/figures/stencil.svg)
+![3x3 stencil](/wiki/src//stencil.svg)
 
 Neighbouring values are accessed using the indexing scheme pictured on
 the figure. For example, computing an approximation of the Laplacian
@@ -432,7 +432,7 @@ sometimes called *variable staggering*). Basilisk provides support for
 the three most common types of staggering: centered (the default),
 face and vertex staggering.
 
-![Example of centered, face and vertex staggering](/src/figures/staggering.svg)
+![Example of centered, face and vertex staggering](/wiki/src/figures/staggering.svg)
 
 How to implement such *staggering* is largely a matter of
 convention. For example, one could just allocate standard fields in
@@ -460,7 +460,7 @@ conditions. All the vertex values need to be defined using
 
 For *face* fields stencil values in the picture below are consistent.
 
-![Stencils for *face* and *vertex* fields](/src/figures/stencil_face.svg)
+![Stencils for *face* and *vertex* fields](/wiki/src/figures/stencil_face.svg)
 
 ## Homogeneous boundary conditions
 
