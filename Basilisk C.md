@@ -627,7 +627,7 @@ double sum_right_neighbors_2D (Point point, scalar s) {
 
 Note that the variable of type `Point` *must* be named `point`.
 
-<div class="bd-callout bd-callout-warning">
+<div class="alert alert-warning">
 Note that the syntax
 
 ~~~literatec
